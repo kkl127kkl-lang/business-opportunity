@@ -2,3 +2,25 @@ node_modules/
 __pycache__/
 .netlify/
 *.pyc
+
+# Next.js
+.next/
+out/
+dist/
+
+# 환경변수
+.env
+.env.local
+.env.*.local
+
+# IDE
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# 테스트
+coverage/
+
+# Vercel
+.vercel/
