@@ -7,10 +7,11 @@
 ├── README.md                     # 프로젝트 개요
 ├── .env.example                  # 환경변수 템플릿
 ├── .gitignore
-├── package.json                  # (생성 예정)
-├── tsconfig.json                 # (생성 예정)
-├── next.config.mjs               # (생성 예정)
-├── tailwind.config.ts            # (생성 예정)
+├── package.json                  # Next.js 14 + 의존성
+├── tsconfig.json                 # TypeScript 설정 (@/* 별칭)
+├── next.config.mjs               # 보안 헤더 포함
+├── tailwind.config.ts            # 브랜드 컬러 (primary-500: #D4551B)
+├── vitest.config.mts             # 테스트 환경 (jsdom + @vitejs/plugin-react)
 ├── docs/
 │   ├── PRD.md                    # 기획서 v2.0
 │   ├── 사업계획서_디지털집사.md     # 사업계획서 v2
@@ -20,30 +21,42 @@
 │   ├── DEPLOY_ISSUE.md           # 배포 이슈
 │   ├── PROGRESS.md               # 진행 현황
 │   ├── ARCHITECTURE.md           # 이 파일
-│   ├── domains/                  # DDD 도메인 문서
-│   ├── entities/                 # DDD 엔티티 문서
-│   └── usecases/                 # DDD 유스케이스 문서
+│   ├── domains/                  # DDD 도메인 문서 (chat, counseling, family, payment, auth)
+│   ├── entities/                 # DDD 엔티티 문서 (User, ChatSession, ChatMessage, Ticket, Subscription)
+│   └── usecases/                 # DDD 유스케이스 문서 (send-message, ai-respond, gift-subscription)
 └── src/
     ├── app/                      # Next.js App Router 페이지
-    │   ├── layout.tsx            # 루트 레이아웃
-    │   ├── page.tsx              # 랜딩 페이지
-    │   ├── (auth)/               # 인증 관련 페이지
-    │   ├── family/               # 가족 대시보드
-    │   ├── admin/                # 상담원 대시보드
-    │   └── api/                  # API 라우트
+    │   ├── globals.css           # Tailwind + 시니어 친화 기본값 (16px root, 44px 터치)
+    │   ├── layout.tsx            # 루트 레이아웃 (한국어, SEO 메타데이터)
+    │   ├── page.tsx              # 랜딩 페이지 (9개 섹션 조합)
+    │   ├── (auth)/               # 인증 관련 페이지 (예정)
+    │   ├── family/               # 가족 대시보드 (예정)
+    │   ├── admin/                # 상담원 대시보드 (예정)
+    │   └── api/                  # API 라우트 (예정)
     ├── components/               # 재사용 컴포넌트
-    │   ├── ui/                   # 공통 UI (Button, Card 등)
+    │   ├── ui/                   # 공통 UI
+    │   │   ├── button.tsx        # Button (5 variant, 3 size, fullWidth, disabled)
+    │   │   ├── card.tsx          # Card (hover, highlighted)
+    │   │   ├── section-wrapper.tsx # SectionWrapper (bg: white/gray/cream)
+    │   │   └── __tests__/        # UI 컴포넌트 테스트 (button 11개, card 6개)
     │   ├── landing/              # 랜딩 페이지 컴포넌트
-    │   ├── family/               # 가족 대시보드 컴포넌트
-    │   ├── admin/                # 상담원 대시보드 컴포넌트
-    │   └── chat/                 # 챗봇 관련 컴포넌트
-    ├── lib/                      # 유틸리티, 서비스
-    │   ├── supabase/             # Supabase 클라이언트
-    │   ├── claude/               # Claude API 클라이언트
-    │   ├── kakao/                # 카카오톡 API
-    │   ├── toss/                 # 토스페이먼츠
-    │   └── utils/                # 공통 유틸리티
-    └── types/                    # TypeScript 타입 정의
+    │   │   ├── header.tsx        # 상단 고정 헤더 (스크롤 감지)
+    │   │   ├── hero-section.tsx  # 히어로 (메인 카피 + CTA + 신뢰 배지)
+    │   │   ├── pain-section.tsx  # 고통 공감 (카드 4개, 2017건 데이터)
+    │   │   ├── service-section.tsx # 서비스 3단계 (카톡 대화 목업)
+    │   │   ├── category-section.tsx # 17개 카테고리 그리드
+    │   │   ├── family-section.tsx # 가족 연결 (폰 목업 + 기능)
+    │   │   ├── pricing-section.tsx # 요금제 4개 플랜
+    │   │   ├── testimonial-section.tsx # 고객 후기 3건
+    │   │   ├── footer.tsx        # 3열 푸터
+    │   │   └── __tests__/        # 랜딩 테스트 (22개 — 단위+통합+시나리오)
+    │   ├── family/               # 가족 대시보드 컴포넌트 (예정)
+    │   ├── admin/                # 상담원 대시보드 컴포넌트 (예정)
+    │   └── chat/                 # 챗봇 관련 컴포넌트 (예정)
+    ├── test/
+    │   └── setup.ts              # 테스트 환경 설정 (@testing-library/jest-dom)
+    ├── lib/                      # 유틸리티, 서비스 (예정)
+    └── types/                    # TypeScript 타입 정의 (예정)
 ```
 
 ## 주요 파일 설명

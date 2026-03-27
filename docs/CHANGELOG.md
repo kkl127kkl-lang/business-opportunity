@@ -15,6 +15,22 @@
 - DDD 문서 폴더 생성 (domains/, entities/, usecases/)
 - 사업계획서 v2 + PRD v2 작성 완료
 
+## [2026-03-27] - 기능추가 Phase 0 공통 UI + Phase 1 랜딩 페이지 MVP
+
+### 변경 내용
+- 공통 UI 컴포넌트 3개: Button (5가지 variant), Card (hover/highlighted), SectionWrapper
+- 랜딩 페이지 9개 섹션: Header, Hero, Pain, Service, Category, Family, Pricing, Testimonial, Footer
+- 반응형 디자인 (모바일/태블릿/데스크톱)
+- 시니어 친화 유니버설 디자인 (44px 터치 영역, 큰 텍스트)
+- 테스트 환경 구축 (vitest + @testing-library/react)
+- 테스트 39개 작성 및 전체 통과
+
+### 영향 범위
+- 신규 파일 16개: src/components/ui/ (3), src/components/landing/ (9), src/test/ (1), vitest.config.mts, __tests__ (3)
+- 수정 파일 1개: src/app/page.tsx
+
+---
+
 ## [2026-03-27] - 사업계획서 + PRD v2 작성
 
 **유형**: 문서
