@@ -2,6 +2,7 @@
  * @description Hero 섹션 — 랜딩 페이지 첫 화면 대형 영역
  * 메인 카피 + 카톡 시작 / 선물하기 CTA + 신뢰 배지 3개
  */
+import Link from 'next/link';
 import Button from '@/components/ui/button';
 
 /** 신뢰 배지 데이터 */
@@ -32,12 +33,16 @@ export default function HeroSection() {
 
         {/* CTA 버튼 2개 */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button variant="kakao" size="lg">
-            💬 카톡으로 시작하기
-          </Button>
-          <Button variant="primary" size="lg">
-            🎁 부모님께 선물하기
-          </Button>
+          <Link href="/login">
+            <Button variant="kakao" size="lg">
+              💬 카톡으로 시작하기
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button variant="primary" size="lg">
+              🎁 부모님께 선물하기
+            </Button>
+          </Link>
         </div>
 
         {/* 신뢰 배지 */}
