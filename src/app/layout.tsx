@@ -1,8 +1,10 @@
 /**
  * @description 루트 레이아웃 — 전체 페이지 공통 설정
+ * AuthProvider로 인증 상태 전역 공유
  */
 import type { Metadata } from 'next';
 import './globals.css';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: '디지털 집사 — 어르신 디지털 생활 도우미',
@@ -17,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="antialiased">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
