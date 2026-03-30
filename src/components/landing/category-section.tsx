@@ -6,7 +6,7 @@
 
 /** 인기 카테고리 (상위 8개 — 모바일에서 먼저 보이는 핵심) */
 const TOP_CATEGORIES = [
-  { emoji: '🛒', label: '쿠팡 주문', desc: '말만 하면 장보기 끝' },
+  { emoji: '🛒', label: '쇼핑 주문', desc: '말만 하면 장보기 끝' },
   { emoji: '🚄', label: 'KTX 예매', desc: '기차표 1분 예약' },
   { emoji: '🏦', label: '은행 송금', desc: '용돈도 카톡으로' },
   { emoji: '🔒', label: '보이스피싱', desc: '사기 즉시 판별' },
@@ -16,17 +16,15 @@ const TOP_CATEGORIES = [
   { emoji: '💰', label: '공과금', desc: '세금·보험·요금' },
 ];
 
-/** 추가 카테고리 (9개) */
+/** 추가 카테고리 (7개 — 시니어 실사용 빈도 기준 선별) */
 const MORE_CATEGORIES = [
-  { emoji: '🏠', label: '관공서', desc: '민원·서류' },
-  { emoji: '📞', label: '통신', desc: '요금제·데이터' },
-  { emoji: '🎬', label: '엔터테인먼트', desc: '넷플릭스·유튜브' },
-  { emoji: '📧', label: '메시지', desc: '카톡·문자 활용' },
-  { emoji: '🗺️', label: '길찾기', desc: '네비게이션' },
+  { emoji: '🏠', label: '관공서·민원', desc: '서류·등본 발급' },
+  { emoji: '📧', label: '카톡·문자', desc: '메시지 보내기' },
   { emoji: '📸', label: '사진·영상', desc: '전송·저장·정리' },
-  { emoji: '🔌', label: '기기 설정', desc: '프린터·충전기' },
-  { emoji: '📋', label: '정부·복지', desc: '보조금·연금' },
-  { emoji: '🛠️', label: '기타 IT', desc: '뭐든 물어보세요' },
+  { emoji: '🎬', label: '영상·OTT', desc: '유튜브·넷플릭스' },
+  { emoji: '📋', label: '복지·연금', desc: '보조금·신청' },
+  { emoji: '🗺️', label: '길찾기', desc: '지도·내비게이션' },
+  { emoji: '💡', label: '기타', desc: '뭐든 물어보세요' },
 ];
 
 export default function CategorySection() {
@@ -40,7 +38,7 @@ export default function CategorySection() {
             이런 것 <span className="text-primary-500">다</span> 돼요
           </h2>
           <p className="text-gray-400 text-sm md:text-base">
-            17가지 카테고리, 일상의 모든 디지털 문제를 해결해요
+            15가지 카테고리, 일상의 모든 디지털 문제를 해결해요
           </p>
         </div>
 
