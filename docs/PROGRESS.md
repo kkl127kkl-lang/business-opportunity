@@ -1,7 +1,8 @@
 # 프로젝트 진행 현황
 
 ## 현재 상태
-Phase 0 일부 + Phase 1 랜딩 페이지 MVP 완료 (테스트 39개 통과)
+Phase 0 완료 + Phase 1 완료 + Phase 2 인증 시스템 코드 완료 (테스트 70개 통과)
+- Supabase 프로젝트 생성 대기 중 (kllko 계정)
 
 ## 마스터 체크리스트 — 디지털 집사 MVP
 
@@ -9,8 +10,9 @@ Phase 0 일부 + Phase 1 랜딩 페이지 MVP 완료 (테스트 39개 통과)
 - [x] docs/CODING_CONVENTION.md 준비 완료 (기존 보완)
 - [x] 프로젝트 초기화 및 폴더 구조 생성
 - [x] DDD 문서 작성 (도메인 5개, 엔티티 5개, 유스케이스 3개)
-- [ ] Supabase 프로젝트 생성 + DB 스키마 설계
-- [ ] 환경 변수 설정 (.env.local)
+- [x] Supabase DB 스키마 SQL 설계 (6테이블 + 7 enum + RLS 정책)
+- [ ] Supabase 프로젝트 생성 + SQL 실행 (kllko 계정으로 진행 예정)
+- [ ] 환경 변수 설정 (.env.local) — Supabase 키 입력 대기
 - [x] 공통 UI 컴포넌트 (Button, Card, SectionWrapper) — 3개 완료
 
 ### Phase 1: 랜딩 페이지 — "서비스를 처음 본 사람이 가입하게 만든다"
@@ -26,11 +28,13 @@ Phase 0 일부 + Phase 1 랜딩 페이지 MVP 완료 (테스트 39개 통과)
 - [x] 반응형 (모바일/태블릿/데스크톱)
 
 ### Phase 2: 인증 시스템 — "가족이 로그인하고, 시니어가 카톡으로 연결된다"
-- [ ] Supabase Auth 설정 (카카오 소셜 로그인)
-- [ ] 가족 회원가입/로그인 페이지
-- [ ] 상담원/관리자 이메일 로그인
-- [ ] 역할 기반 접근 제어 (미들웨어)
-- [ ] 로그인 상태 관리 (세션/토큰)
+- [x] Supabase Auth 클라이언트 설정 (client/server/middleware)
+- [x] 가족 회원가입/로그인 페이지 (카카오 + 이메일)
+- [x] 상담원/관리자 이메일 로그인
+- [x] 역할 기반 접근 제어 (미들웨어 — 4역할 × 경로 매핑)
+- [x] 로그인 상태 관리 (AuthContext + 쿠키 세션)
+- [x] OAuth 콜백 API (카카오 로그인 후 users 테이블 자동 upsert)
+- [ ] Supabase Dashboard에서 카카오 OAuth 프로바이더 설정 (대기)
 
 ### Phase 3: 카카오톡 AI 집사 — "시니어가 카톡으로 요청하면 AI가 답한다"
 - [ ] 카카오톡 채널 API 연동 (Webhook)
@@ -90,3 +94,20 @@ Phase 0 일부 + Phase 1 랜딩 페이지 MVP 완료 (테스트 39개 통과)
 - 완료: 코드 리뷰 통과 (header.tsx 스크롤 리스너 메모리 누수 수정)
 - 진행 중: Phase 0 나머지 (Supabase 스키마, 환경변수)
 - 이슈: 없음
+
+### 2026-03-30
+- 완료: DB 스키마 SQL 설계 (6테이블, 7 enum, RLS 정책, 인덱스, 트리거)
+  - users, chat_sessions, chat_messages, tickets, subscriptions, family_links
+- 완료: TypeScript 타입 정의 7파일 (user, chat, ticket, subscription, family, database, index)
+- 완료: Supabase 클라이언트 3파일 (client, server, middleware 헬퍼)
+- 완료: 인증 시스템 전체 구현
+  - AuthProvider (컨텍스트) — 카카오/이메일 로그인, 로그아웃, 세션 관리
+  - 로그인 페이지 — 카카오 CTA + 이메일 폼 (비밀번호 보기/숨기기)
+  - 회원가입 페이지 — 카카오 3초가입 + 이메일 폼 (비밀번호 강도 체크)
+  - OAuth 콜백 API — 카카오 code→세션 교환 + users 테이블 자동 upsert
+  - Next.js 미들웨어 — 공개/비공개 경로 분리, 역할별 접근 제어
+- 완료: Header에 로그인/선물하기 링크 연결 (a태그 → Link 컴포넌트)
+- 완료: layout.tsx에 AuthProvider 래퍼 적용
+- 완료: 테스트 31개 신규 (미들웨어 20개 + 타입 11개), 전체 70개 통과
+- 완료: tsc 에러 0건
+- 대기: Supabase 프로젝트 생성 (kllko 계정) + .env.local 설정 + 카카오 OAuth 설정
