@@ -29,7 +29,7 @@ export default function LoginPage() {
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get('redirect') || '/family';
+  const redirectTo = searchParams.get('redirect') || '/chat';
   const { signInWithKakao, signInWithEmail, isLoading: authLoading, isLocalMode, user } = useAuth();
 
   const [mode, setMode] = useState<'select' | 'email'>('select');
