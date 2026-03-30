@@ -17,7 +17,7 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirect') || '/family';
-  const { signInWithKakao, signInWithEmail, isLoading: authLoading } = useAuth();
+  const { signInWithKakao, signInWithEmail, isLoading: authLoading, isLocalMode, user } = useAuth();
 
   const [mode, setMode] = useState<'select' | 'email'>('select');
   const [email, setEmail] = useState('');
@@ -26,11 +26,18 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // 이미 로그인된 상태면 리다이렉트
+  if (user && !authLoading) {
+    router.push(redirectTo);
+    return null;
+  }
+
   /** 카카오 로그인 */
   const handleKakaoLogin = async () => {
     try {
       setError('');
       await signInWithKakao();
+      router.push(redirectTo);
     } catch (err) {
       setError(err instanceof Error ? err.message : '카카오 로그인에 실패했습니다');
     }
@@ -190,6 +197,19 @@ export default function LoginPage() {
                 {isSubmitting ? '로그인 중...' : '로그인'}
               </button>
             </form>
+          </div>
+        )}
+
+        {/* 로컬 모드 테스트 계정 안내 */}
+        {isLocalMode && (
+          <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-700">
+            <p className="font-semibold mb-2">테스트 계정 (비밀번호 아무거나)</p>
+            <ul className="space-y-1 text-xs">
+              <li><code>admin@test.com</code> → 관리자</li>
+              <li><code>agent@test.com</code> → 상담원</li>
+              <li><code>family@test.com</code> → 가족(자녀)</li>
+              <li>또는 아무 이메일 입력 → 가족 역할로 로그인</li>
+            </ul>
           </div>
         )}
 
