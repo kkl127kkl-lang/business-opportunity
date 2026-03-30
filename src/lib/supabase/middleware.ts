@@ -26,10 +26,10 @@ export function createMiddlewareClient(accessToken?: string) {
 
 /** 역할별 접근 가능 경로 매핑 */
 export const ROLE_ROUTES: Record<UserRole, string[]> = {
-  SENIOR: ['/'],                              // 시니어는 카톡만 사용 (웹 접근 최소)
-  FAMILY: ['/', '/family', '/family/*'],       // 가족 대시보드
-  AGENT: ['/', '/admin', '/admin/*'],          // 상담원 대시보드
-  ADMIN: ['/', '/admin', '/admin/*', '/family', '/family/*'], // 모든 접근
+  SENIOR: ['/', '/chat'],                                       // 시니어는 카톡 + 웹 채팅
+  FAMILY: ['/', '/family', '/family/*', '/chat'],               // 가족 대시보드 + 채팅
+  AGENT: ['/', '/admin', '/admin/*', '/chat'],                  // 상담원 대시보드 + 채팅
+  ADMIN: ['/', '/admin', '/admin/*', '/family', '/family/*', '/chat'], // 모든 접근
 };
 
 /** 공개 경로 (인증 불필요) */

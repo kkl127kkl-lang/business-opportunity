@@ -7,7 +7,7 @@
 
 import { useAuth } from '@/lib/auth/auth-context';
 import { useRouter } from 'next/navigation';
-import { LogOut, User, Shield } from 'lucide-react';
+import { LogOut, User, Shield, MessageCircle } from 'lucide-react';
 
 export default function FamilyDashboard() {
   const { user, isLoading, isLocalMode, signOut } = useAuth();
@@ -78,14 +78,27 @@ export default function FamilyDashboard() {
           </div>
         </div>
 
+        {/* AI 집사 대화 시작 버튼 */}
+        <button
+          onClick={() => router.push('/chat')}
+          className="w-full bg-primary-500 hover:bg-primary-600 text-white rounded-2xl shadow-sm p-6 mb-6 flex items-center gap-4 transition-colors"
+          style={{ minHeight: '72px' }}
+        >
+          <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center shrink-0">
+            <MessageCircle className="w-7 h-7 text-white" />
+          </div>
+          <div className="text-left">
+            <h3 className="text-lg font-bold">AI 집사에게 물어보기</h3>
+            <p className="text-primary-100 text-sm">스마트폰, 은행, 병원 예약 등 무엇이든 도와드려요</p>
+          </div>
+        </button>
+
         {/* 준비 중 안내 */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
           <p className="text-4xl mb-4">🏗️</p>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">가족 대시보드 준비 중</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">더 많은 기능 준비 중</h3>
           <p className="text-gray-500 text-sm leading-relaxed">
-            부모님 연결, 활동 요약, 구독 관리 기능이 여기에 들어올 예정입니다.
-            <br />
-            (Phase 5에서 구현)
+            부모님 연결, 활동 요약, 구독 관리 기능이 곧 추가됩니다.
           </p>
         </div>
       </main>

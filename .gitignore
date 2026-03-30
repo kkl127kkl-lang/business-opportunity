@@ -24,3 +24,5 @@ coverage/
 
 # Vercel
 .vercel/
+
+.vercel
