@@ -150,7 +150,7 @@ export default function ChatPage() {
       <header className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <button
-            onClick={() => router.push('/family')}
+            onClick={() => router.back()}
             className="p-2 -ml-2 text-gray-500 hover:text-gray-700"
             aria-label="뒤로가기"
           >
