@@ -1,110 +1,100 @@
 /**
- * @description 서비스 소개 3단계 섹션 — "집사가 해결해 드려요"
- * 카톡 요청 → AI 해결 → 자연스럽게 학습 흐름을 보여주는 영역
+ * @description 서비스 소개 — Before/After 대비 + 실제 대화 예시
+ * 모바일에서 세로 스크롤, 데스크톱에서 좌우 배치
  */
-import SectionWrapper from '@/components/ui/section-wrapper';
 
-/** 서비스 예시 데이터 — 5단계 (실생활 시나리오) */
-const STEPS = [
+/** 해결 시나리오 — Before vs After */
+const SCENARIOS = [
   {
-    number: '❶',
-    title: '쿠팡에서 주문하고 싶을 때',
-    description: '검색부터 결제까지 한 줄이면 끝',
-    example: {
-      request: '쿠팡에서 두루마리 휴지 주문해줘',
-      response: '코코 3겹 30롤 12,900원 로켓배송으로 주문 완료! 내일 도착해요 🚀',
-    },
+    icon: '🛒',
+    title: '쿠팡 주문',
+    before: '검색 → 장바구니 → 결제 → 배송지... 10단계',
+    after: '"쿠팡에서 휴지 주문해줘" → 1분 완료',
+    chat: { q: '쿠팡에서 두루마리 휴지 주문해줘', a: '코코 3겹 30롤 12,900원 로켓배송 주문 완료! 내일 도착 🚀' },
   },
   {
-    number: '❷',
-    title: '네이버로 쇼핑할 때',
-    description: '최저가 비교도 AI가 알아서',
-    example: {
-      request: '네이버에서 혈압계 좋은 거 찾아줘',
-      response: '오므론 HEM-7156 최저가 49,800원 찾았어요! 리뷰 4.8점 ⭐ 주문할까요?',
-    },
+    icon: '🚄',
+    title: 'KTX 예매',
+    before: '코레일 앱 설치 → 회원가입 → 좌석 선택 → 결제',
+    after: '"서울→부산 내일 오전" → 예약 완료',
+    chat: { q: 'KTX 서울→부산 내일 오전 예매해줘', a: '내일 오전 9시 KTX 1석 예약 완료! 좌석 7A 🚄' },
   },
   {
-    number: '❸',
-    title: 'KTX·병원 예약도 한마디로',
-    description: '24시간 즉시 응답, 사람 상담원도 대기 중',
-    example: {
-      request: 'KTX 서울→부산 내일 오전 예매해줘',
-      response: '내일 오전 9시 KTX 1석 예약 완료! 좌석 7A입니다 🚄',
-    },
+    icon: '🏦',
+    title: '은행 송금',
+    before: '앱 실행 → 로그인 → 인증서 → OTP → 비밀번호...',
+    after: '"엄마한테 용돈 10만원 보내줘" → 전송 완료',
+    chat: { q: '엄마한테 용돈 10만원 보내줘', a: '김순자님 계좌로 100,000원 송금 완료! 💸' },
   },
   {
-    number: '❹',
-    title: '이상한 전화 받았을 때',
-    description: '보이스피싱 즉시 판별 + 가족에게 알림',
-    example: {
-      request: '검찰이라며 전화 왔는데 계좌번호 알려달래요',
-      response: '🚨 보이스피싱입니다! 절대 알려주지 마세요! 112 신고 도와드릴게요',
-    },
-  },
-  {
-    number: '❺',
-    title: '자연스럽게 배우게 돼요',
-    description: '3번 같은 걸 물어보면 맞춤 가이드 전송',
-    example: {
-      request: '쿠팡 주문을 또 도와주세요',
-      response: '직접 해보실 수 있게 쉬운 가이드를 보내드릴게요! 📖',
-    },
+    icon: '🔒',
+    title: '보이스피싱 판별',
+    before: '혼자 판단 → 불안 → 자녀에게 전화 → 이미 늦음',
+    after: '"이 문자 사기야?" → 즉시 판별 + 가족 알림',
+    chat: { q: '검찰이라며 계좌번호 알려달래요', a: '🚨 100% 보이스피싱! 절대 알려주지 마세요. 가족분께 알렸어요' },
   },
 ];
 
-/** 서비스 소개 3단계 섹션 */
 export default function ServiceSection() {
   return (
-    <SectionWrapper bg="gray">
-      <div className="text-center mb-16">
-        <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
-          집사가 해결해 드려요
-        </h2>
-      </div>
+    <section id="service" className="py-16 md:py-24 px-4 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        {/* 섹션 제목 */}
+        <div className="text-center mb-12">
+          <p className="text-primary-500 font-semibold text-sm mb-2">SOLUTION</p>
+          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3">
+            복잡한 10단계가
+            <br />
+            <span className="text-primary-500">카톡 한 줄</span>로 바뀝니다
+          </h2>
+        </div>
 
-      <div className="space-y-12 md:space-y-16">
-        {STEPS.map((step, index) => (
-          <div
-            key={step.title}
-            className={`flex flex-col md:flex-row items-center gap-8 md:gap-12 ${
-              index % 2 === 1 ? 'md:flex-row-reverse' : ''
-            }`}
-          >
-            {/* 설명 영역 */}
-            <div className="flex-1 text-center md:text-left">
-              <span className="text-5xl mb-4 block">{step.number}</span>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                {step.title}
-              </h3>
-              <p className="text-gray-500 text-lg">{step.description}</p>
-            </div>
+        {/* 시나리오 카드 */}
+        <div className="space-y-4 md:space-y-6">
+          {SCENARIOS.map((s) => (
+            <div key={s.title} className="bg-white rounded-2xl md:rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex flex-col md:flex-row">
+                {/* 왼쪽: Before → After */}
+                <div className="flex-1 p-5 md:p-8">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-2xl">{s.icon}</span>
+                    <h3 className="text-lg font-bold text-gray-900">{s.title}</h3>
+                  </div>
 
-            {/* 카톡 대화 미리보기 */}
-            <div className="flex-1 w-full max-w-sm">
-              <div className="bg-[#B2C7D9] rounded-2xl p-4 shadow-lg">
-                {/* 유저 메시지 (오른쪽) */}
-                <div className="flex justify-end mb-3">
-                  <div className="bg-[#FEE500] rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
-                    <p className="text-sm text-gray-900">{step.example.request}</p>
+                  {/* Before */}
+                  <div className="mb-3">
+                    <span className="inline-block text-[10px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full mb-1.5">BEFORE</span>
+                    <p className="text-sm text-gray-500 line-through decoration-red-300">{s.before}</p>
+                  </div>
+
+                  {/* After */}
+                  <div>
+                    <span className="inline-block text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full mb-1.5">AFTER</span>
+                    <p className="text-sm text-gray-900 font-medium">{s.after}</p>
                   </div>
                 </div>
-                {/* AI 응답 (왼쪽) */}
-                <div className="flex justify-start">
-                  <div className="flex gap-2">
-                    <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0">
-                      🏠
+
+                {/* 오른쪽: 카톡 대화 미리보기 */}
+                <div className="md:w-80 bg-[#B2C7D9] p-4 md:rounded-none">
+                  <div className="space-y-2">
+                    <div className="flex justify-end">
+                      <div className="bg-[#FEE500] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[80%]">
+                        <p className="text-xs text-gray-900">{s.chat.q}</p>
+                      </div>
                     </div>
-                    <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%]">
-                      <p className="text-sm text-gray-900">{step.example.response}</p>
+                    <div className="flex items-end gap-1.5">
+                      <div className="w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center text-[10px] shrink-0">🏠</div>
+                      <div className="bg-white rounded-2xl rounded-tl-sm px-3 py-2 max-w-[80%]">
+                        <p className="text-xs text-gray-800">{s.chat.a}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }

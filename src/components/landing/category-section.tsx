@@ -1,56 +1,83 @@
 /**
- * @description 17개 카테고리 그리드 섹션 — "이런 것 다 돼요"
- * PRD의 17개 서비스 카테고리를 아이콘 그리드로 표시
+ * @description 카테고리 섹션 — "이런 것 다 돼요"
+ * 17개 서비스 카테고리를 감성적 그리드로 표시
+ * 모바일: 3열 컴팩트, 데스크톱: 5열 + 호버 효과
  */
-import SectionWrapper from '@/components/ui/section-wrapper';
 
-/** 17개 카테고리 데이터 */
-const CATEGORIES = [
-  { emoji: '🍔', label: '음식 주문', detail: '키오스크/배달앱' },
-  { emoji: '🚄', label: '교통 예매', detail: 'KTX/항공/버스' },
-  { emoji: '🏥', label: '병원 예약', detail: '접수/예약 대행' },
-  { emoji: '💰', label: '금융 안내', detail: '공과금/보험' },
-  { emoji: '🛒', label: '쇼핑', detail: '쿠팡/반품 대행' },
-  { emoji: '📱', label: '앱 설정', detail: '설치/삭제/업데이트' },
-  { emoji: '🔒', label: '보안', detail: '보이스피싱 판별' },
-  { emoji: '🏠', label: '관공서', detail: '민원/서류' },
-  { emoji: '🔌', label: '기기 설정', detail: '프린터/전기차충전' },
-  { emoji: '📞', label: '통신', detail: '요금제/데이터' },
-  { emoji: '🎬', label: '엔터테인먼트', detail: '넷플릭스/OTT' },
-  { emoji: '📧', label: '이메일/메시지', detail: '카톡/문자 활용' },
-  { emoji: '🗺️', label: '길찾기', detail: '네비게이션' },
-  { emoji: '📸', label: '사진/영상', detail: '전송/저장/정리' },
-  { emoji: '🏦', label: '은행', detail: '모바일뱅킹 안내' },
-  { emoji: '📋', label: '정부/복지', detail: '보조금/연금 조회' },
-  { emoji: '🛠️', label: '기타 IT', detail: '기타 문제해결' },
+/** 인기 카테고리 (상위 8개 — 모바일에서 먼저 보이는 핵심) */
+const TOP_CATEGORIES = [
+  { emoji: '🛒', label: '쿠팡 주문', desc: '말만 하면 장보기 끝' },
+  { emoji: '🚄', label: 'KTX 예매', desc: '기차표 1분 예약' },
+  { emoji: '🏦', label: '은행 송금', desc: '용돈도 카톡으로' },
+  { emoji: '🔒', label: '보이스피싱', desc: '사기 즉시 판별' },
+  { emoji: '🏥', label: '병원 예약', desc: '접수부터 예약까지' },
+  { emoji: '🍔', label: '음식 주문', desc: '배달앱·키오스크' },
+  { emoji: '📱', label: '앱 설정', desc: '설치·업데이트·삭제' },
+  { emoji: '💰', label: '공과금', desc: '세금·보험·요금' },
 ];
 
-/** 17개 카테고리 그리드 섹션 */
+/** 추가 카테고리 (9개) */
+const MORE_CATEGORIES = [
+  { emoji: '🏠', label: '관공서', desc: '민원·서류' },
+  { emoji: '📞', label: '통신', desc: '요금제·데이터' },
+  { emoji: '🎬', label: '엔터테인먼트', desc: '넷플릭스·유튜브' },
+  { emoji: '📧', label: '메시지', desc: '카톡·문자 활용' },
+  { emoji: '🗺️', label: '길찾기', desc: '네비게이션' },
+  { emoji: '📸', label: '사진·영상', desc: '전송·저장·정리' },
+  { emoji: '🔌', label: '기기 설정', desc: '프린터·충전기' },
+  { emoji: '📋', label: '정부·복지', desc: '보조금·연금' },
+  { emoji: '🛠️', label: '기타 IT', desc: '뭐든 물어보세요' },
+];
+
 export default function CategorySection() {
   return (
-    <SectionWrapper bg="white">
-      <div className="text-center mb-12">
-        <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
-          이런 것 다 돼요
-        </h2>
-        <p className="text-gray-500">
-          17가지 카테고리, 일상의 모든 디지털 문제를 해결해요
-        </p>
-      </div>
+    <section className="py-16 md:py-24 px-4 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        {/* 섹션 제목 */}
+        <div className="text-center mb-10">
+          <p className="text-primary-500 font-semibold text-sm mb-2">CATEGORY</p>
+          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3">
+            이런 것 <span className="text-primary-500">다</span> 돼요
+          </h2>
+          <p className="text-gray-400 text-sm md:text-base">
+            17가지 카테고리, 일상의 모든 디지털 문제를 해결해요
+          </p>
+        </div>
 
-      {/* 카테고리 그리드 — 모바일 3열, 데스크톱 5열 */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-        {CATEGORIES.map((cat) => (
-          <div
-            key={cat.label}
-            className="flex flex-col items-center text-center p-4 rounded-xl hover:bg-gray-50 transition-colors"
-          >
-            <span className="text-3xl md:text-4xl mb-2">{cat.emoji}</span>
-            <span className="text-sm font-medium text-gray-900">{cat.label}</span>
-            <span className="text-xs text-gray-400 mt-1">{cat.detail}</span>
-          </div>
-        ))}
+        {/* 인기 카테고리 — 큰 카드 */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-4">
+          {TOP_CATEGORIES.map((cat) => (
+            <div
+              key={cat.label}
+              className="bg-white rounded-2xl p-4 md:p-5 border border-gray-100 hover:border-primary-200 hover:shadow-md transition-all duration-200 text-center group cursor-default"
+            >
+              <span className="text-3xl md:text-4xl block mb-2 group-hover:scale-110 transition-transform">{cat.emoji}</span>
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-0.5">{cat.label}</h3>
+              <p className="text-[11px] md:text-xs text-gray-400">{cat.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* 추가 카테고리 — 작은 카드 */}
+        <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2 md:gap-3">
+          {MORE_CATEGORIES.map((cat) => (
+            <div
+              key={cat.label}
+              className="bg-white rounded-xl p-3 border border-gray-100 hover:border-primary-200 transition-colors text-center cursor-default"
+            >
+              <span className="text-xl md:text-2xl block mb-1">{cat.emoji}</span>
+              <span className="text-[11px] md:text-xs font-medium text-gray-700 block leading-tight">{cat.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* 한 줄 요약 */}
+        <div className="text-center mt-8">
+          <p className="text-gray-400 text-sm">
+            이 외에도 계속 추가되고 있어요 — <strong className="text-gray-600">뭐든 물어보세요!</strong>
+          </p>
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }
