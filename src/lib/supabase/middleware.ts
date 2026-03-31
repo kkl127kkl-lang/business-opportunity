@@ -26,10 +26,10 @@ export function createMiddlewareClient(accessToken?: string) {
 
 /** 역할별 접근 가능 경로 매핑 */
 export const ROLE_ROUTES: Record<UserRole, string[]> = {
-  SENIOR: ['/', '/chat', '/chat/*'],                                       // 시니어는 카톡 + 웹 채팅
-  FAMILY: ['/', '/family', '/family/*', '/chat', '/chat/*'],               // 가족 대시보드 + 채팅
-  AGENT: ['/', '/admin', '/admin/*', '/chat', '/chat/*'],                  // 상담원 대시보드 + 채팅
-  ADMIN: ['/', '/admin', '/admin/*', '/family', '/family/*', '/chat', '/chat/*'], // 모든 접근
+  SENIOR: ['/', '/chat', '/chat/*', '/wallet'],                                          // 시니어는 카톡 + 웹 채팅 + 지갑
+  FAMILY: ['/', '/family', '/family/*', '/chat', '/chat/*', '/wallet'],                  // 가족 대시보드 + 채팅 + 지갑
+  AGENT: ['/', '/admin', '/admin/*', '/chat', '/chat/*'],                                // 상담원 대시보드 + 채팅
+  ADMIN: ['/', '/admin', '/admin/*', '/family', '/family/*', '/chat', '/chat/*', '/wallet'], // 모든 접근
 };
 
 /** 공개 경로 (인증 불필요) */
@@ -39,6 +39,7 @@ export const PUBLIC_ROUTES = [
   '/signup',              // 회원가입
   '/auth/callback',       // OAuth 콜백
   '/api/auth',            // 인증 API
+  '/api/chat',            // 채팅 API (Gemini AI)
   '/api/kakao/webhook',   // 카카오톡 웹훅
 ];
 

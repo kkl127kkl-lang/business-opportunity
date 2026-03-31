@@ -197,7 +197,34 @@ function generateLocalAIResponse(content: string, metadata: MessageMetadata): st
   return responses[metadata.category || 'OTHER'] || responses.OTHER;
 }
 
-/** 메시지 전송 (로컬 모드) — 세션 자동 생성 + AI 응답 포함 */
+/** Claude API를 통한 AI 응답 요청 */
+async function fetchClaudeResponse(
+  content: string,
+  sessionId: string
+): Promise<string | null> {
+  try {
+    // 대화 이력 구성 (최근 메시지를 Claude 형식으로 변환)
+    const messages = getLocalMessages(sessionId);
+    const history = messages.map((m) => ({
+      role: m.role === 'USER' ? 'user' as const : 'assistant' as const,
+      content: m.content,
+    }));
+
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, sessionId, history }),
+    });
+
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.reply || null;
+  } catch {
+    return null; // API 실패 시 로컬 폴백
+  }
+}
+
+/** 메시지 전송 — Claude API 우선, 실패 시 로컬 규칙 기반 폴백 */
 export async function sendMessage(request: SendMessageRequest, userId: string): Promise<SendMessageResponse> {
   const now = new Date().toISOString();
   const metadata = buildMetadata(request.content);
@@ -226,7 +253,7 @@ export async function sendMessage(request: SendMessageRequest, userId: string): 
     session.category = metadata.category;
   }
 
-  /** 사용자 메시지 저장 */
+  /** 사용자 메시지 저장 (AI 응답 전에 먼저 저장) */
   const userMessage: ChatMessage = {
     id: generateId(),
     sessionId: session.id,
@@ -236,21 +263,30 @@ export async function sendMessage(request: SendMessageRequest, userId: string): 
     createdAt: now,
   };
 
-  /** AI 응답 생성 */
-  const aiContent = generateLocalAIResponse(request.content, metadata);
+  /** 보이스피싱 고위험 → 자동 에스컬레이션 (Claude 호출 전 즉시 처리) */
+  if (metadata.phishing && metadata.risk === 'high') {
+    session.status = 'ESCALATED';
+  }
+
+  /** AI 응답 생성: Claude API 우선 → 실패 시 로컬 폴백 */
+  let aiContent: string;
+  if (metadata.phishing && metadata.risk === 'high') {
+    // 보이스피싱 고위험은 즉시 경고 (API 호출 없이)
+    aiContent = generateLocalAIResponse(request.content, metadata);
+  } else {
+    // Claude API 호출 시도
+    const claudeReply = await fetchClaudeResponse(request.content, session.id);
+    aiContent = claudeReply || generateLocalAIResponse(request.content, metadata);
+  }
+
   const aiMessage: ChatMessage = {
     id: generateId(),
     sessionId: session.id,
     role: 'AI',
     content: aiContent,
     metadata,
-    createdAt: new Date(Date.now() + 500).toISOString(), // AI 응답은 0.5초 후
+    createdAt: new Date(Date.now() + 500).toISOString(),
   };
-
-  /** 보이스피싱 고위험 → 자동 에스컬레이션 */
-  if (metadata.phishing && metadata.risk === 'high') {
-    session.status = 'ESCALATED';
-  }
 
   /** 로컬 저장 */
   if (IS_LOCAL_MODE || typeof window !== 'undefined') {
